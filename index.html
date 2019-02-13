@@ -2,12 +2,12 @@
 <html lang="zh-cn">
 
 <head>
-    <title>生日快乐</title>
+    <title>Happy Valentine's Day!</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
     body {
-        background-color: #f0f0f0;
+        background-color: #333;
         margin: 0px;
         overflow: hidden;
     }
@@ -19,16 +19,46 @@
         padding-top: 10px;
         height: 40px;
         line-height: 20px;
-        color: #dFd0d0;
+        color: #fdafda;
+        text-align: center;
+    }
+    .title span{
+        display: inline-block;
+        min-width: 26px;
+        font-size: 20px;
+    }
+    .bottom{
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding-bottom: 10px;
+        height: 40px;
+        line-height: 20px;
+        color: #f78ae0;
         text-align: center;
     }
     </style>
 </head>
 <body>
     <div class="title">
-        爱你的小可爱祝小乖乖生日快乐~<br>
-        花了点时间解决bug。<br>没能赶上7.10号十分抱歉T.T
+        Baby, I have met you for<br><br>
+        <span id="days">---</span>
+        days
+        <span id="hours">--</span>
+        hours
+        <span id="minutes">--</span>
+        minutes
+        <span id="seconds">--</span>
+        seconds.<br>
+        
     </div>
+    <div class="bottom">
+        The clock rotation for a second.<br>
+        I will love one more second.
+    </div>
+    <script src="js/moment.js"></script>
+    <script src="js/moment-timezone.js"></script>
     <script src="js/three.js"></script>
     <script src="js/Projector.js"></script>
     <script src="js/CanvasRenderer.js"></script>
@@ -36,6 +66,26 @@
     <script src="js/Sparks.js"></script>
     <!-- load the font file from canvas-text -->
     <script src="js/helvetiker_regular.typeface.js"></script>
+    <script>
+        var date = new Date("2018/10/02 17:30:00").getTime();
+        function getClock(){
+            var now = +new Date();
+            var du = now - date
+        var days=Math.floor(du/(24*3600*1000))
+        var leave1=du%(24*3600*1000)    //计算天数后剩余的毫秒数
+        var hours=Math.floor(leave1/(3600*1000))
+        var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数
+        var minutes=Math.floor(leave2/(60*1000))
+        var leave3=leave2%(60*1000)      //计算分钟数后剩余的毫秒数
+        var seconds=Math.round(leave3/1000)
+            // console.log(days,hours,minutes,seconds)
+            document.getElementById('days').innerText = days
+            document.getElementById('hours').innerText = hours
+            document.getElementById('minutes').innerText = minutes
+            document.getElementById('seconds').innerText = seconds
+        }
+        setInterval(getClock,200);
+    </script>
     <script>
     var container;
     var camera, scene, renderer;
@@ -76,7 +126,7 @@
         text3d.computeBoundingBox();
         var centerOffset = -0.5 * (text3d.boundingBox.max.x - text3d.boundingBox.min.x);
         var textMaterial = new THREE.MeshBasicMaterial({
-            color: Math.random() * 0xffffff,
+            color: 0xf78ae0,
             overdraw: 0.5
         });
         text = new THREE.Mesh(text3d, textMaterial);
@@ -299,7 +349,7 @@
 
         renderer = new THREE.CanvasRenderer();
 
-        renderer.setClearColor(0xf0f0f0);
+        renderer.setClearColor(0x333333);
 
         renderer.setPixelRatio(window.devicePixelRatio);
 
